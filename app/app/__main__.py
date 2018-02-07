@@ -1,4 +1,4 @@
-import http.server
+from sdk.servers.http import run
 
 if __name__ == '__main__':
-    http.server.test(HandlerClass=http.server.SimpleHTTPRequestHandler, port=8080)
+    run()

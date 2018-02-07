@@ -1,4 +1,4 @@
-all: vendor test
+all: vendor test package
 
 config:
 	@rm -rf .venv && python -m venv .venv
@@ -9,4 +9,7 @@ vendor:
 test:
 	@bash .build/test.sh
 
-.PHONY: all vendor test
+package:
+	@bash .build/package.sh
+
+.PHONY: all vendor test package
