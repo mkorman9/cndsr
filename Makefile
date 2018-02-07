@@ -4,9 +4,9 @@ config:
 	@rm -rf .venv && python -m venv .venv
 
 vendor:
-	@source ./.venv/bin/activate && python -m pip install -r requirements.txt
+	@bash .build/vendor.sh
 
 test:
-	@source ./.venv/bin/activate && python -m nose
+	@bash .build/test.sh
 
 .PHONY: all vendor test
