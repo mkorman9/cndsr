@@ -1,0 +1,20 @@
+language: python
+sudo: required
+python:
+  - 3.6
+services:
+  - docker
+
+install:
+  - if [[ "$TRAVIS_BRANCH" == "release-*" ]]; then export VERSION="$(echo $TRAVIS_BRANCH | cut -d "-" -f 2)"; else export VERSION="$TRAVIS_BRANCH"; fi
+  - make config
+
+script:
+  - make
+
+branches:
+  only:
+    - /^(?!untagged-).*$/
+
+notifications:
+  email: false
