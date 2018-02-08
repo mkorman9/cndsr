@@ -9,8 +9,8 @@ ADD sdk $APP_PATH/sdk
 ADD app $APP_PATH/app
 
 RUN adduser --disabled-password --gecos "" --system --no-create-home $APP_USER && \
-    chown -R $APP_USER $APP_PATH
-RUN python -m venv .venv && \
+    chown -R $APP_USER $APP_PATH && \
+    python -m venv .venv && \
     .venv/bin/pip install ./sdk && \
     .venv/bin/pip install ./app
 
