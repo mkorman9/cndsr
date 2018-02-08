@@ -20,6 +20,6 @@ EXPOSE 8080
 USER $APP_USER
 
 RUN sed -i -e  "s|DEBUG.*=.*True|DEBUG = False|g" app/app/settings.py && \
-    sed -i -e  "s|SECRET_KEY.*=.*|SECRET_KEY = $BUILD_KEY|g" app/app/settings.py
+    sed -i -e  "s|SECRET_KEY.*=.*|SECRET_KEY = \"$BUILD_KEY\"|g" app/app/settings.py
 
 CMD exec .venv/bin/python app/manage.py runserver 0.0.0.0:8080

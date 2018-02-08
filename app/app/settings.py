@@ -25,7 +25,7 @@ SECRET_KEY = '4q*&xg7&4^g2g$7ct_vjv60nm%$#6406(mpo9u-c9cps36q!xt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -78,6 +78,12 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
 }
 
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 10,
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
