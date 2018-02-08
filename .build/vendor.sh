@@ -2,8 +2,9 @@
 
 source "./.venv/bin/activate"
 
-files=$(find . -name "requirements.txt" -type f)
+bundles=$(find . -name "requirements.txt" -type f)
 
-for file in ${files}; do
-    python -m pip install -r ${file}
+for bundle in ${bundles}; do
+    echo "installing external dependencies from ${bundle}..."
+    python -m pip install -r "${bundle}"
 done

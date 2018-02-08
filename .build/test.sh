@@ -2,4 +2,9 @@
 
 source "./.venv/bin/activate"
 
-python -m nose
+packages=$(find . -name "setup.py" -type f -printf "%h\n")
+
+for package in ${packages}; do
+    echo "running tests for ${package}..."
+    python -m nose "${package}"
+done
