@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.6-alpine
 
 ARG BUILD_KEY
 
@@ -10,7 +10,7 @@ WORKDIR $APP_PATH
 ADD sdk $APP_PATH/sdk
 ADD app $APP_PATH/app
 
-RUN adduser --disabled-password --gecos "" --system --no-create-home $APP_USER && \
+RUN addgroup -S $APP_USER && adduser -S -G $APP_USER $APP_USER && \
     python -m venv .venv && \
     .venv/bin/pip install ./sdk && \
     .venv/bin/pip install ./app && \
