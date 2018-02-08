@@ -1,5 +1,7 @@
 FROM python:3.6
 
+ARG BUILD_KEY
+
 ENV APP_USER "sandbox"
 ENV APP_PATH "/app"
 
@@ -15,6 +17,9 @@ RUN adduser --disabled-password --gecos "" --system --no-create-home $APP_USER &
     chown -R $APP_USER $APP_PATH
 
 EXPOSE 8080
-
 USER $APP_USER
-CMD exec .venv/bin/python -m app
+
+RUN sed -i -e  "s|DEBUG.*=.*True|DEBUG = False|g" app/app/settings.py && \
+    sed -i -e  "s|SECRET_KEY.*=.*|SECRET_KEY = $BUILD_KEY|g" app/app/settings.py
+
+CMD exec .venv/bin/python app/manage.py runserver 0.0.0.0:8080
