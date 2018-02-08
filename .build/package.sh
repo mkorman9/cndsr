@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source "./.venv/bin/activate"
-
 images=$(find $(pwd) -type f -name '.image' -printf "%h\n" | sort | uniq)
 image_version=${VERSION:-0.0.0-dev}
 
