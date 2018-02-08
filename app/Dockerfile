@@ -2,7 +2,7 @@ FROM python:3.6-alpine
 
 ARG BUILD_KEY
 
-ENV APP_USER "sandbox"
+ENV APP_USER "app"
 ENV APP_PATH "/app"
 
 RUN mkdir -p $APP_PATH
@@ -14,7 +14,7 @@ RUN addgroup -S $APP_USER && adduser -S -G $APP_USER $APP_USER && \
     python -m venv .venv && \
     .venv/bin/pip install ./sdk && \
     .venv/bin/pip install ./app && \
-    chown -R $APP_USER $APP_PATH
+    chown -R $APP_USER:$APP_USER $APP_PATH
 
 EXPOSE 8080
 USER $APP_USER
