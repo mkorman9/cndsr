@@ -11,7 +11,7 @@ if __name__ == '__main__':
     response.raise_for_status()
 
     response_content = response.json()
-    if response_content != "Hello world!":
+    if response_content != "Hello world":
         print("invalid content {}".format(response_content), file=sys.stderr)
         sys.exit(1)
     else:
