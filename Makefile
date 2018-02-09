@@ -1,6 +1,6 @@
 # Main build file for project. Used for both local builds and CI purposes.
 #
-# Requires automake, Python >= 3 and Docker installed in PATH, and accessible without sudo.
+# Requires automake, Python >= 3, Docker and docker-compose installed in PATH, and accessible without sudo.
 # First time after cloning project execute the following command to set up local virtualenv:
 #
 # $ make config
@@ -23,5 +23,8 @@ test:
 
 package:
 	@bash .build/package.sh
+
+validate:
+	@bash .build/validate.sh
 
 .PHONY: all vendor test package

@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    image: mkorman/python-build-app:latest
+    ports:
+      - "8080"
+
+  feature-tests:
+    image: mkorman/python-feature-tests:latest
+    environment:
+      - APP_SERVICE_HOST=app
+      - APP_SERVICE_PORT=8080
+    depends_on:
+      - app

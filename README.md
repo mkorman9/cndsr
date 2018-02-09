@@ -1,7 +1,7 @@
 Prototype of build pipe for Python projects consisting of multiple packages and Docker images.
    
 #### Configure:
-1. Install automake, Python >= 3 and Docker. They should be accessible from PATH, without sudo.
+1. Install automake, Python >= 3, Docker and docker-compose. They should be accessible from PATH, without sudo.
 2. Clone project
 ```bash
 git clone https://github.com/mkorman9/python-build-system.git
@@ -15,4 +15,9 @@ make config
 #### Build:
 ```bash
 make
+```
+
+#### Running feature tests:
+```bash
+make validate
 ```
