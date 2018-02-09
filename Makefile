@@ -27,4 +27,4 @@ package:
 validate:
 	@bash .build/validate.sh
 
-.PHONY: all vendor test package
+.PHONY: all vendor test package validate

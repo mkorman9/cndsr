@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cd "./feature-tests"
 
 echo "starting feature tests..." && \

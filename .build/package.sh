@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 images=$(find $(pwd) -type f -name '.image' -printf "%h\n" | sort | uniq)
 build_key=$(cat /dev/urandom | head -c 32 | base64 | tr -dc _A-Z-a-z-0-9)
 image_version=${VERSION:-0.0.0-dev}

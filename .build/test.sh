@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 packages=$(find . -name "setup.py" -type f -printf "%h\n")
 
 for package in ${packages}; do
