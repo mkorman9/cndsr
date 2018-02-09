@@ -36,4 +36,5 @@ CMD exec .venv/bin/uwsgi \
     --master \
     --processes 4 \
     --threads 2 \
-    --wsgi-file app/app/wsgi.py
+    --chdir ./app
+    --wsgi-file app/wsgi.py
