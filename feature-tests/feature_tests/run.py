@@ -12,5 +12,7 @@ if __name__ == '__main__':
 
     response_content = response.json()
     if response_content != "Hello world!":
-        print("invalid content {}".format(response_content))
+        print("invalid content {}".format(response_content), file=sys.stderr)
         sys.exit(1)
+    else:
+        print("OK: {}".format(response_content), file=sys.stderr)
