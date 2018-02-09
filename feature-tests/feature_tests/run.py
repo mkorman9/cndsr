@@ -14,5 +14,3 @@ if __name__ == '__main__':
     if response_content != "Hello world!":
         print("invalid content {}".format(response_content))
         sys.exit(1)
-    else:
-        print("OK: {}".format(response_content))
