@@ -6,12 +6,21 @@ services:
   - docker
 
 install:
-  - if [[ "$TRAVIS_BRANCH" == "release-*" ]]; then export VERSION="$(echo $TRAVIS_BRANCH | cut -d "-" -f 2)"; else export VERSION="$TRAVIS_BRANCH"; fi
+  - if [[ "$TRAVIS_BRANCH" == "release-*" ]]; then
+    export VERSION="$(echo $TRAVIS_BRANCH | cut -d "-" -f 2)";
+    else export VERSION="$TRAVIS_BRANCH";
+    fi
   - make config
 
 script:
   - make
   - make validate
+
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "release-*" ]]; then
+    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+    docker push mkorman/exemplary-django-app:$VERSION && docker push mkorman/exemplary-django-app:latest;
+    fi
 
 branches:
   only:
