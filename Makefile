@@ -1,15 +1,15 @@
 # Main build file for project. Used for both local builds and CI purposes.
 #
-# Requires GNU tools, Python >= 3, Docker and docker-compose installed, and accessible through PATH without sudo.
-# NOTE: On Unix-like systems it is required to install GNU findutils.
-# On macOS simply brew install findutils and modify PATH. Popular Linux distribution should come with it already.
+# Requires Python >= 3, Docker and docker-compose installed and accessible through PATH, without sudo.
+# NOTE: On Unix-like systems it is also required to install GNU findutils.
+# On macOS simply brew install findutils and modify PATH. Popular Linux distributions should come with it already.
 #
 # How to build?
 # First time after cloning project execute the following command to set up local virtualenv:
 #
 # $ make config
 #
-# After that builds can be started with just:
+# After that next builds can be started with just:
 #
 # $ make
 #
