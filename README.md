@@ -1,7 +1,11 @@
-Prototype of build pipe for Python projects consisting of multiple packages and Docker images.
-   
+My playground for learning Django stack.   
+It consists of exemplary Django app (currently serves no purpose), automated tests in behave, 
+and generic build pipeline for Python projects, able to test multiple packages and 
+pack them as Docker images which are fully configurable using environment variables.
+Execution environment is spawned on-demand with either docker-compose (local testing, CI) or Kubernetes (production).
+
 #### Configure:
-1. Install automake, Python >= 3, Docker and docker-compose. They should be accessible from PATH, without sudo.
+1. Install Python >= 3, Docker and docker-compose. They should be accessible from PATH, without sudo.
 2. Clone project
 ```bash
 git clone https://github.com/mkorman9/python-build-system.git
@@ -14,7 +18,7 @@ make config
 
 #### Build:
 ```bash
-make
+make all  # or simply "make"
 ```
 
 #### Running feature tests:
