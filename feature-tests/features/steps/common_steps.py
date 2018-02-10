@@ -25,7 +25,8 @@ def step_impl(context, endpoint):
     )
 
 
-@then('{content} should be returned')
-def step_impl(context, content):
+@then('{result} should be returned')
+def step_impl(context, result):
     context.response.raise_for_status()
-    assert context.response.json() == "Hello world"
+    actual_result = context.response.json()['result']
+    assert actual_result == result
