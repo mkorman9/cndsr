@@ -1,6 +1,10 @@
 # Main build file for project. Used for both local builds and CI purposes.
 #
-# Requires automake, Python >= 3, Docker and docker-compose installed in PATH, and accessible without sudo.
+# Requires GNU tools, Python >= 3, Docker and docker-compose installed, and accessible through PATH without sudo.
+# NOTE: On Unix-like systems it is required to install GNU findutils.
+# On macOS simply brew install findutils and modify PATH. Popular Linux distribution should come with it already.
+#
+# How to build?
 # First time after cloning project execute the following command to set up local virtualenv:
 #
 # $ make config
@@ -8,6 +12,10 @@
 # After that builds can be started with just:
 #
 # $ make
+#
+# Feature tests can be started with:
+#
+# $ make validate
 #
 
 all: vendor test package
