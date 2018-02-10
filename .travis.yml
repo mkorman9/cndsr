@@ -19,7 +19,7 @@ script:
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "release-"* ]]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push mkorman/exemplary-django-backend:$VERSION && docker push mkorman/exemplary-django-backend:latest;
+    docker push mkorman/django-url-shortening-backend:$VERSION && docker push mkorman/django-url-shortening-backend:latest;
     fi
 
 branches:
