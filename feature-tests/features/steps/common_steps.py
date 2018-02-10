@@ -11,8 +11,8 @@ ServiceLocation = namedtuple('ServiceLocation', ['host', 'port'])
 @given('a service')
 def step_impl(context):
     context.service_location = ServiceLocation(
-        host=os.getenv("APP_SERVICE_HOST"),
-        port=os.getenv("APP_SERVICE_PORT")
+        host=os.getenv("BACKEND_SERVICE_HOST"),
+        port=os.getenv("BACKEND_SERVICE_PORT")
     )
 
     assert context.service_location.host is not None

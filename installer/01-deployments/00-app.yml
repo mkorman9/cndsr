@@ -7,11 +7,11 @@ spec:
   template:
     metadata:
       labels:
-        app-name: app
+        app-name: backend
     spec:
       containers:
-        - name: app
-          image: mkorman/exemplary-django-app:latest
+        - name: backend
+          image: mkorman/django-url-shortening-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

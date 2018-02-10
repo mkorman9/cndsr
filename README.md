@@ -1,5 +1,5 @@
-My playground for learning Django stack.   
-It consists of exemplary Django app (currently serves no purpose), automated tests in behave, 
+My playground for learning Django stack. It serves as simple URL shortening service.
+It consists of backend REST API written in Django, automated tests in behave, 
 and generic build pipeline for Python projects, able to test multiple packages and 
 pack them as Docker images which are fully configurable using environment variables.
 Execution environment is spawned on-demand with either docker-compose (local testing, CI) or Kubernetes (production).

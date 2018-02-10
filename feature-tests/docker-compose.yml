@@ -1,14 +1,14 @@
 version: '3'
 services:
-  app:
-    image: mkorman/exemplary-django-app:latest
+  backend:
+    image: mkorman/django-url-shortening-backend:latest
     ports:
       - "8080"
 
   feature-tests:
-    image: mkorman/python-feature-tests:latest
+    image: mkorman/django-url-shortening-feature-tests:latest
     environment:
-      - APP_SERVICE_HOST=app
-      - APP_SERVICE_PORT=8080
+      - BACKEND_SERVICE_HOST=backend
+      - BACKEND_SERVICE_PORT=8080
     depends_on:
-      - app
+      - backend

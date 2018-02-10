@@ -14,7 +14,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'rest_framework',
-    'app_interface.apps.AppInterfaceConfig'
+    'backend_interface.apps.BackendInterfaceConfig'
 ]
 
 MIDDLEWARE = [
@@ -23,9 +23,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware'
 ]
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = 'backend.urls'
 
-WSGI_APPLICATION = 'app.wsgi.application'
+WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 # Database
