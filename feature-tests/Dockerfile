@@ -13,4 +13,4 @@ RUN python -m venv .venv && \
     .venv/bin/pip install ./sdk && \
     .venv/bin/pip install ./feature-tests
 
-CMD exec .venv/bin/python $APP_PATH/feature-tests/feature_tests
+CMD exec .venv/bin/behave $APP_PATH/feature-tests/features
