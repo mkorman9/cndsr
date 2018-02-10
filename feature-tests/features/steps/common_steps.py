@@ -2,6 +2,7 @@ import os
 from collections import namedtuple
 
 import requests
+import sys
 from behave import when, then, given
 
 ServiceLocation = namedtuple('ServiceLocation', ['host', 'port'])
@@ -21,12 +22,17 @@ def step_impl(context):
 @when('we request {endpoint} endpoint')
 def step_impl(context, endpoint):
     context.response = requests.get(
-        'http://{}:{}/'.format(context.service_location.host, context.service_location.port)
+        'http://{}:{}{}'.format(context.service_location.host, context.service_location.port, endpoint)
     )
 
 
 @then('{result} should be returned')
 def step_impl(context, result):
     context.response.raise_for_status()
+
     actual_result = context.response.json()['result']
-    assert actual_result == result
+    actual_result = str(actual_result)
+
+    if actual_result != result:
+        print("{} != {}".format(actual_result, result), file=sys.stderr)
+        raise AssertionError()

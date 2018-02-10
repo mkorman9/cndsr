@@ -1,5 +1,5 @@
-Feature: Printing Hello world through HTTP
-  Scenario: Request and validate response
+Feature: Adding integers
+  Scenario: Two integers should be added properly
     Given a service
-    When we request / endpoint
-    Then "Hello world" should be returned
+    When we request /add/3/7 endpoint
+    Then 10 should be returned
