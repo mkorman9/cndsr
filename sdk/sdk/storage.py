@@ -22,6 +22,8 @@ class Storage(metaclass=ABCMeta):
         :type key: basestring
         :param value: value of entry
         :type value: basestring
+        :return: whether the set was successful
+        :rtype: bool
         """
         pass
 
@@ -33,7 +35,7 @@ class RedisStorage(Storage):
 
     def set(self, key, value):
         connection = self._get_redis_connection()
-        connection.set(key, value)
+        return connection.setnx(key, value) == 1
 
     @staticmethod
     def _get_redis_connection():

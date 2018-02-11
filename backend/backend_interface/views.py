@@ -43,7 +43,7 @@ def _retrieve_url_by_key(key):
 
 
 def _store_pair(key, url):
-    storage.set(key, url)
+    return storage.set(key, url)
 
 
 def _is_url_valid(url):
@@ -51,8 +51,11 @@ def _is_url_valid(url):
 
 
 def _store_url_and_get_key(url):
-    key = _generate_key()
-    _store_pair(key, url)
+    while True:
+        key = _generate_key()
+        if _store_pair(key, url):
+            break
+
     return key
 
 
