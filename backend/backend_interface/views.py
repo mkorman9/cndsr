@@ -28,9 +28,9 @@ def go_to(request, key, format=None):
     return HttpResponseRedirect(redirect_to=url)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def shorten(request, format=None):
-    url = request.GET['url']
+    url = request.data.get('url')
     if not url:
         return JsonResponse(status=400, data={
             'error': 'missing url parameter'

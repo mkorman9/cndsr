@@ -20,8 +20,11 @@ def step_impl(context):
 
 @when('we try to shorten {url}')
 def step_impl(context, url):
-    context.response = requests.get(
-        'http://{}:{}/shorten?url={}'.format(context.service_location.host, context.service_location.port, url)
+    context.response = requests.post(
+        'http://{}:{}/shorten'.format(context.service_location.host, context.service_location.port),
+        json={
+            "url": url
+        }
     )
 
     context.response.raise_for_status()
