@@ -47,3 +47,13 @@ def step_impl(context, url):
 
     assert response.status_code == 302, "wrong response code {}".format(response.status_code)
     assert response.headers['Location'] == url, "wrong location '{}'".format(url)
+
+
+@then('asking for {key} gives 404')
+def step_impl(context, key):
+    response = requests.get(
+        'http://{}:{}/{}'.format(context.service_location.host, context.service_location.port, key),
+        allow_redirects=False
+    )
+
+    assert response.status_code == 404, "wrong response code {}".format(response.status_code)
