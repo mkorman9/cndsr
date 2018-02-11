@@ -1,9 +1,8 @@
 import logging
 import random
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 
 temp_store = {}
 logger = logging.getLogger(__name__)
@@ -11,15 +10,20 @@ logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
 def go_to(request, key, format=None):
-    url = _retrieve_url_by_key(key)
-    if not url:
-        return JsonResponse(status=404, data={
-            'error': 'key not found'
+    try:
+        url = _retrieve_url_by_key(key)
+        if not url:
+            return JsonResponse(status=404, data={
+                'error': 'key not found'
+            })
+    except Exception as e:
+        logger.error('exception encountered while retrieving url: {}'.format(e))
+
+        return JsonResponse(status=500, data={
+            'error': 'server error'
         })
 
-    return Response(status=301, headers={
-        'Location': url
-    })
+    return HttpResponseRedirect(redirect_to=url)
 
 
 @api_view(['GET'])
@@ -49,7 +53,7 @@ def shorten(request, format=None):
 
 
 def _retrieve_url_by_key(key):
-    return temp_store[key]  # TODO: retrieve from redis
+    return temp_store.get(key)  # TODO: retrieve from redis
 
 
 def _is_url_valid(url):

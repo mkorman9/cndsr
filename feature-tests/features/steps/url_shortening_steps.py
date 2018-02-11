@@ -38,8 +38,9 @@ def step_impl(context):
 def step_impl(context, url):
     key = context.response_json['key']
     response = requests.get(
-        'http://{}:{}/{}'.format(context.service_location.host, context.service_location.port, key)
+        'http://{}:{}/{}'.format(context.service_location.host, context.service_location.port, key),
+        allow_redirects=False
     )
 
-    assert response.status_code == 301, "wrong response code {}".format(response.status_code)
+    assert response.status_code == 302, "wrong response code {}".format(response.status_code)
     assert response.headers['Location'] == url, "wrong location '{}'".format(url)
