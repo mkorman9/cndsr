@@ -1,10 +1,12 @@
 import logging
 import random
 
+import os
+
+import redis
 from django.http import JsonResponse, HttpResponseRedirect
 from rest_framework.decorators import api_view
 
-temp_store = {}
 logger = logging.getLogger(__name__)
 
 
@@ -53,7 +55,8 @@ def shorten(request, format=None):
 
 
 def _retrieve_url_by_key(key):
-    return temp_store.get(key)  # TODO: retrieve from redis
+    connection = _get_redis_connection()
+    return connection.get(key)
 
 
 def _is_url_valid(url):
@@ -71,4 +74,13 @@ def _generate_key():
 
 
 def _store_pair(key, url):
-    temp_store[key] = url
+    connection = _get_redis_connection()
+    connection.set(key, url)
+
+
+def _get_redis_connection():
+    host, port = os.getenv("REDIS_SERVICE_HOST"), os.getenv("REDIS_SERVICE_PORT")
+    if not host or not port:
+        raise Exception('REDIS_SERVICE_HOST or REDIS_SERVICE_PORT not set')
+
+    return redis.StrictRedis(host=host, port=int(port), db=0)

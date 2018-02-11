@@ -1,9 +1,19 @@
 version: '3'
 services:
+  redis:
+    image: redis:3-alpine
+    ports:
+      - "6379"
+
   backend:
     image: mkorman/django-url-shortening-backend:latest
     ports:
       - "8080"
+    environment:
+      - REDIS_SERVICE_HOST=redis
+      - REDIS_SERVICE_PORT=6379
+    depends_on:
+      - redis
 
   feature-tests:
     image: mkorman/django-url-shortening-feature-tests:latest

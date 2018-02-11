@@ -33,7 +33,7 @@ RUN sed -i -e  "s|DEBUG.*=.*True|DEBUG = False|g" backend/backend/settings.py &&
 CMD exec .venv/bin/uwsgi \
     --http 0.0.0.0:8080 \
     --master \
-    --processes 1 \
-    --threads 1 \
+    --processes 4 \
+    --threads 2 \
     --chdir ./backend \
     --wsgi-file backend/wsgi.py
