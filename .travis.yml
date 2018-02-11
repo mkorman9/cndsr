@@ -14,7 +14,7 @@ install:
 
 script:
   - make
-  - make validate
+  - #make validate
 
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "release-"* ]]; then
