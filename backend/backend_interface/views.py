@@ -1,3 +1,4 @@
+import logging
 import random
 
 from django.http import JsonResponse
@@ -5,6 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 temp_store = {}
+logger = logging.getLogger(__name__)
 
 
 @api_view(['GET'])
@@ -12,7 +14,7 @@ def go_to(request, key, format=None):
     url = _retrieve_url_by_key(key)
     if not url:
         return JsonResponse(status=404, data={
-            'error': 'Key not found'
+            'error': 'key not found'
         })
 
     return Response(status=301, headers={
@@ -25,18 +27,25 @@ def shorten(request, format=None):
     url = request.GET['url']
     if not url:
         return JsonResponse(status=400, data={
-            'error': 'Missing url parameter'
+            'error': 'missing url parameter'
         })
 
     if not _is_url_valid(url):
         return JsonResponse(status=400, data={
-            'error': 'Invalid URL'
+            'error': 'invalid URL'
         })
 
-    key = _store_url_and_get_key(url)
-    return JsonResponse(status=200, data={
-        'key': key
-    })
+    try:
+        key = _store_url_and_get_key(url)
+        return JsonResponse(status=200, data={
+            'key': key
+        })
+    except Exception as e:
+        logger.error('exception encountered while storing URL: {}'.format(e))
+
+        return JsonResponse(status=500, data={
+            'error': 'server error'
+        })
 
 
 def _retrieve_url_by_key(key):
