@@ -1,9 +1,11 @@
-import os
 import random
 
-import redis
 from django.http import JsonResponse, HttpResponseRedirect
 from rest_framework.decorators import api_view
+
+from sdk.storage import create_storage
+
+storage = create_storage()
 
 
 @api_view(['GET'])
@@ -37,8 +39,11 @@ def shorten(request, format=None):
 
 
 def _retrieve_url_by_key(key):
-    connection = _get_redis_connection()
-    return connection.get(key)
+    return storage.get(key)
+
+
+def _store_pair(key, url):
+    storage.set(key, url)
 
 
 def _is_url_valid(url):
@@ -54,15 +59,3 @@ def _store_url_and_get_key(url):
 def _generate_key():
     return str(random.randint(0, 2000000))  # TODO: something better + check for collisions
 
-
-def _store_pair(key, url):
-    connection = _get_redis_connection()
-    connection.set(key, url)
-
-
-def _get_redis_connection():
-    host, port = os.getenv("REDIS_SERVICE_HOST"), os.getenv("REDIS_SERVICE_PORT")
-    if not host or not port:
-        raise Exception('REDIS_SERVICE_HOST or REDIS_SERVICE_PORT not set')
-
-    return redis.StrictRedis(host=host, port=int(port), db=0)
