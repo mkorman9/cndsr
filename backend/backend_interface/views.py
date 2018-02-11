@@ -1,28 +1,17 @@
-import logging
-import random
-
 import os
+import random
 
 import redis
 from django.http import JsonResponse, HttpResponseRedirect
 from rest_framework.decorators import api_view
 
-logger = logging.getLogger(__name__)
-
 
 @api_view(['GET'])
 def go_to(request, key, format=None):
-    try:
-        url = _retrieve_url_by_key(key)
-        if not url:
-            return JsonResponse(status=404, data={
-                'error': 'key not found'
-            })
-    except Exception as e:
-        logger.error('exception encountered while retrieving url: {}'.format(e))
-
-        return JsonResponse(status=500, data={
-            'error': 'server error'
+    url = _retrieve_url_by_key(key)
+    if not url:
+        return JsonResponse(status=404, data={
+            'error': 'key not found'
         })
 
     return HttpResponseRedirect(redirect_to=url)
@@ -41,17 +30,10 @@ def shorten(request, format=None):
             'error': 'invalid URL'
         })
 
-    try:
-        key = _store_url_and_get_key(url)
-        return JsonResponse(status=200, data={
-            'key': key
-        })
-    except Exception as e:
-        logger.error('exception encountered while storing URL: {}'.format(e))
-
-        return JsonResponse(status=500, data={
-            'error': 'server error'
-        })
+    key = _store_url_and_get_key(url)
+    return JsonResponse(status=200, data={
+        'key': key
+    })
 
 
 def _retrieve_url_by_key(key):
