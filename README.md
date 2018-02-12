@@ -1,10 +1,22 @@
 ## cndsr (condenser)
 cndsr is a simple URL shortening software. It's free, open source and ready to deploy basically anywhere.
-cndsr comes as a set of Docker images and Kubernetes manifest files, describing the deploy process. 
+cndsr comes as a set of Docker images and Kubernetes manifest files, describing the deployment process. 
 Execution environment is spawned on-demand with either docker-compose (local testing, CI) 
 or Kubernetes (production). Every component of cndsr is fully scalable.
+   
+Every commit to cndsr is tested on CI against automatic testcases written in behave. Commits to release
+branches (matching pattern "release-.*") are automatically pushed to Dockerhub after successful build.
 
-[TODO: more details]
+[TODO: add screenshot here :>]
+
+#### Technologies
+- Python 3
+- Django
+- behave
+- uWSGI
+- Docker, docker-compose
+- Kubernetes
+- redis
 
 ### Why?
 Project is maintained for educational purposes.
