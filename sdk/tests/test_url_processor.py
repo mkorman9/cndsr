@@ -32,3 +32,16 @@ class TestUrlProcess(TestCase):
         # when then
         with self.assertRaises(InvalidURLException):
             process_url(url)
+
+    def test_should_fail_for_local_addresses(self):
+        # given
+        banned_urls = (
+            'http://localhost:8080/asd',
+            '127.0.0.1/?p=123',
+            'http://user:pass@192.168.1.1'
+        )
+
+        # when then
+        for banned_url in banned_urls:
+            with self.assertRaises(InvalidURLException):
+                process_url(banned_url)

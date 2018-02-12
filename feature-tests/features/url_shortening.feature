@@ -19,3 +19,8 @@ Feature: URLs shortening
     Given a service
     When we try to shorten google
     Then request should be rejected
+
+  Scenario: URL containing reserved network address should be rejected
+    Given a service
+    When we try to shorten http://192.168.2.1/
+    Then request should be rejected

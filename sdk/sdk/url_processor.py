@@ -1,9 +1,11 @@
+import re
+from urllib.parse import urlparse
 
 ALLOWED_URL_PREFIXES = ('http://', 'https://')
 DEFAULT_URL_PREFIX = 'http://'
-URL_LOCAL_IP_REGEX = r'''
-    (^localhost$)|(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])
-'''
+URL_LOCAL_IP_REGEX = re.compile(r'''
+(localhost)|(127\.)|(192\.168\.)|(10\.)|(172\.1[6-9]\.)|(172\.2[0-9]\.)|(172\.3[0-1]\.)|(::1$)|([fF][cCdD])
+''')
 
 
 class InvalidURLException(Exception):
@@ -23,7 +25,9 @@ def process_url(url):
 
     url = _force_protocol_prefix(url)
 
-    # TODO: validate domain name
+    parsed_url = urlparse(url)
+    if URL_LOCAL_IP_REGEX.findall(parsed_url.netloc):
+        raise InvalidURLException("url represents invalid network location")
 
     return url
 
