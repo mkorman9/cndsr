@@ -31,11 +31,11 @@ class Storage(metaclass=ABCMeta):
 class RedisStorage(Storage):
     def get(self, key):
         connection = self._get_redis_connection()
-        return connection.get(key)
+        return connection.get(key.lower())
 
     def set(self, key, value):
         connection = self._get_redis_connection()
-        return connection.setnx(key, value) == 1
+        return connection.setnx(key.lower(), value) == 1
 
     @staticmethod
     def _get_redis_connection():
