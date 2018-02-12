@@ -1,12 +1,17 @@
-Simplistic but fully scalable URL shortening service. It serves as my playground for learning Django stack.
-It consists of backend REST API written in Django, automated tests in behave, 
-and generic build pipeline for Python projects, able to test multiple packages and 
-pack them as Docker images which are fully configurable using environment variables.
-Execution environment is spawned on-demand with either docker-compose (local testing, CI) or Kubernetes (production).
+## cndsr (condenser)
+cndsr is a simple URL shortening software. It's free, open source and ready to deploy basically anywhere.
+cndsr comes as a set of Docker images and Kubernetes manifest files, describing the deploy process. 
+Execution environment is spawned on-demand with either docker-compose (local testing, CI) 
+or Kubernetes (production). Every component of cndsr is fully scalable.
 
 [TODO: more details]
 
-#### Configure:
+### Why?
+Project is maintained for educational purposes.
+
+### How to build?
+
+#### Configure (do only once):
 1. Install Python >= 3, Docker and docker-compose. They should be accessible from PATH, without sudo.
 2. Clone project
 ```bash
@@ -18,12 +23,19 @@ cd python-build-system
 make config
 ```
 
-#### Build:
+#### Build and run feature tests locally:
 ```bash
 make all  # or simply "make"
-```
-
-#### Running feature tests:
-```bash
 make validate
 ```
+
+### Components
+
+cndsr architecture consists of the following components:
+1. **backend** - REST service able to store and retrieve URLs. Also performs validation and generates mapping keys.
+It is entirely written in Django, and is deployed on uWSGI inside separated Docker container. Backend is stateless.
+2. **frontend** - TODO
+3. **storage** - distributed key:value store used to store mappings. Currently redis is used for this purpose.
+4. **balancer** - HTTP load balancer. Balances traffic between frontend and backend pods. 
+Every request to _/s/*_ path is redirected to one of backend pods, and every other request is handled by the frontend.
+Balancer terminates HTTPS from outside the system.
