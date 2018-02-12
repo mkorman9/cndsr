@@ -59,4 +59,4 @@ Balancer terminates HTTPS from outside the system.
 ![backend](.images/backend_component.png)
 
 #### frontend image
-![backend](.images/frontend_component.png)
+![frontend](.images/frontend_component.png)
