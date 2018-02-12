@@ -54,3 +54,9 @@ Balancer terminates HTTPS from outside the system.
 
 #### High level system design
 ![highleveldesign](.images/high_level_design.png)
+
+#### backend image
+![backend](.images/backend_component.png)
+
+#### frontend image
+![backend](.images/frontend_component.png)
