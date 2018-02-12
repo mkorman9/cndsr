@@ -1,17 +1,17 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: frontend
+  name: endpoint
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        component-name: frontend
+        component-name: endpoint
     spec:
       containers:
         - name: frontend
-          image: mkorman/cndsr-frontend:latest
+          image: mkorman/cndsr-endpoint:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
