@@ -10,18 +10,18 @@ ServiceLocation = namedtuple('ServiceLocation', ['host', 'port'])
 @given('a service')
 def step_impl(context):
     context.service_location = ServiceLocation(
-        host=os.getenv("BACKEND_SERVICE_HOST"),
-        port=os.getenv("BACKEND_SERVICE_PORT")
+        host=os.getenv("ENDPOINT_SERVICE_HOST"),
+        port=os.getenv("ENDPOINT_SERVICE_PORT")
     )
 
-    assert context.service_location.host is not None, "BACKEND_SERVICE_HOST not set"
-    assert context.service_location.port is not None, "BACKEND_SERVICE_PORT not set"
+    assert context.service_location.host is not None, "ENDPOINT_SERVICE_HOST not set"
+    assert context.service_location.port is not None, "ENDPOINT_SERVICE_PORT not set"
 
 
 @when('we try to shorten {url}')
 def step_impl(context, url):
     context.response = requests.post(
-        'http://{}:{}/shorten'.format(context.service_location.host, context.service_location.port),
+        'http://{}:{}/s/shorten'.format(context.service_location.host, context.service_location.port),
         json={
             "url": url
         }
@@ -45,7 +45,7 @@ def step_impl(context):
 def step_impl(context, url):
     key = context.response_json['key']
     response = requests.get(
-        'http://{}:{}/{}'.format(context.service_location.host, context.service_location.port, key),
+        'http://{}:{}/s/{}'.format(context.service_location.host, context.service_location.port, key),
         allow_redirects=False
     )
 
@@ -56,7 +56,7 @@ def step_impl(context, url):
 @then('asking for {key} gives 404')
 def step_impl(context, key):
     response = requests.get(
-        'http://{}:{}/{}'.format(context.service_location.host, context.service_location.port, key),
+        'http://{}:{}/s/{}'.format(context.service_location.host, context.service_location.port, key),
         allow_redirects=False
     )
 

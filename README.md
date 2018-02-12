@@ -48,9 +48,9 @@ cndsr architecture consists of the following components:
 It is entirely written in Django, and is deployed on uWSGI inside separated Docker container. Backend is stateless.
 2. **frontend** - TODO
 3. **storage** - distributed key:value store used to store mappings. Currently redis is used for this purpose.
-4. **balancer** - HTTP load balancer. Balances traffic between frontend and backend pods. 
+4. **endpoint** - HTTP reverse proxy. Splits the traffic between frontend and backend pods. 
 Every request to _/s/*_ path is redirected to one of backend pods, and every other request is handled by the frontend.
-Balancer terminates HTTPS from outside the system.
+Endpoint terminates HTTPS from outside the system.
 
 #### High level system design
 ![highleveldesign](.images/high_level_design.png)
