@@ -1,8 +1,7 @@
-import random
-
 from django.http import JsonResponse, HttpResponseRedirect
 from rest_framework.decorators import api_view
 
+from sdk.key_generation import generate_random_key
 from sdk.storage import create_storage
 
 storage = create_storage()
@@ -60,5 +59,4 @@ def _store_url_and_get_key(url):
 
 
 def _generate_key():
-    return str(random.randint(0, 2000000))  # TODO: something better + check for collisions
-
+    return generate_random_key()
