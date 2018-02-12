@@ -18,7 +18,7 @@ def process_url(url):
     """
     if not url:
         raise InvalidURLException("empty url")
-    elif not url.contains('.'):
+    elif '.' not in url:
         raise InvalidURLException("url must contain at least one dot character")
 
     url = _force_protocol_prefix(url)
