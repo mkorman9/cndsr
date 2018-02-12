@@ -37,6 +37,11 @@ def step_impl(context):
     assert context.response_json['key'] is not None, "key was not returned: {}".format(context.response_json['error'])
 
 
+@then('request should be rejected')
+def step_impl(context):
+    assert context.response.status_code == 400, "wrong response code {}".format(context.response.status_code)
+
+
 @then('asking for key redirects to {url}')
 def step_impl(context, url):
     key = context.response_json['key']

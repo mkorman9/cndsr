@@ -8,3 +8,14 @@ Feature: URLs shortening
     When we try to shorten https://google.com
     Then key should be returned
     Then asking for key redirects to https://google.com
+
+  Scenario: Protocol prefix should be automatically appended
+    Given a service
+    When we try to shorten google.com
+    Then key should be returned
+    Then asking for key redirects to http://google.com
+
+  Scenario: URL without dot should be rejected
+    Given a service
+    When we try to shorten google
+    Then request should be rejected
