@@ -39,3 +39,6 @@ It is entirely written in Django, and is deployed on uWSGI inside separated Dock
 4. **balancer** - HTTP load balancer. Balances traffic between frontend and backend pods. 
 Every request to _/s/*_ path is redirected to one of backend pods, and every other request is handled by the frontend.
 Balancer terminates HTTPS from outside the system.
+
+#### High level system design
+![highleveldesign](.images/high_level_design.png)
