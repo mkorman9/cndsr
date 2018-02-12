@@ -27,13 +27,12 @@ def step_impl(context, url):
         }
     )
 
-    context.response.raise_for_status()
-
-    context.response_json = context.response.json()
-
 
 @then('key should be returned')
 def step_impl(context):
+    context.response.raise_for_status()
+    context.response_json = context.response.json()
+
     assert context.response_json['key'] is not None, "key was not returned: {}".format(context.response_json['error'])
 
 
