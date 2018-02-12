@@ -5,7 +5,7 @@ Execution environment is spawned on-demand with either docker-compose (local tes
 or Kubernetes (production). Every component of cndsr is fully scalable.
    
 Every commit to cndsr is tested on CI against automatic testcases written in behave. Commits to release
-branches (matching pattern "release-.*") are automatically pushed to Dockerhub after successful build.
+branches are automatically pushed to Dockerhub after successful build.
 
 [TODO: add screenshot here :>]
 
