@@ -17,6 +17,7 @@ branches are automatically pushed to Dockerhub after successful build.
 - Docker, docker-compose
 - Kubernetes
 - redis
+- React
 
 ### Why?
 Project is maintained for educational purposes.
