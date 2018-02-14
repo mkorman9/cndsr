@@ -28,8 +28,8 @@ Project is maintained for educational purposes.
 1. Install Python >= 3, Docker and docker-compose. They should be accessible from PATH, without sudo.
 2. Clone project
 ```bash
-git clone https://github.com/mkorman9/python-build-system.git
-cd python-build-system
+git clone https://github.com/mkorman9/cndsr.git
+cd cndsr
 ```
 3. Setup local virtualenv
 ```bash
