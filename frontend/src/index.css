@@ -4,21 +4,62 @@ body {
   font-family: sans-serif;
 }
 
-.Main {
-  text-align: center;
+div .Main {
+  display: block;
 }
 
-.Main-header {
-  background-color: #222;
-  height: 150px;
+header {
+  background-color: #1565C0;
+  height: 50px;
   padding: 20px;
   color: white;
 }
 
-.Main-title {
+header a:link {
+  color: white;
+  text-decoration: none;
+}
+
+header a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+.Main-logo {
   font-size: 1.5em;
+  text-align: left;
+  float: left;
+  margin: 10px;
+}
+
+nav {
+  font-size: 1.2em;
+  float: right;
+  text-align: center;
+  margin-right: 100px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+nav ul li {
+  float: right;
+}
+
+nav ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
 
 .Main-intro {
+  margin-top: 30px;
+  text-align: center;
   font-size: large;
 }
