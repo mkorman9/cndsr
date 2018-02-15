@@ -5,7 +5,7 @@ class About extends Component {
   render() {
     return (
       <div>
-        <p>cndsr (condenser) is a simple URL shortening service. It's completely free and open source.</p>
+        cndsr (condenser) is a simple URL shortening service. It's completely free and open source.
       </div>
     );
   }

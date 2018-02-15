@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+  background-color: #fafafa;
 }
 
 div .Main {
@@ -13,6 +14,11 @@ header {
   height: 50px;
   padding: 20px;
   color: white;
+}
+
+div .Main-orange-bar {
+  background-color: #EF6C00;
+  height: 10px;
 }
 
 header a:link {
@@ -58,11 +64,19 @@ nav ul li a {
   text-decoration: none;
 }
 
-.Main-intro {
-  margin-top: 30px;
+article {
+  padding-top: 0;
   text-align: center;
   font-size: large;
-  width: 70%;
+  width: 80%;
+  height: 100vh;
   margin-left: auto;
   margin-right: auto;
+  background-color: white;
+}
+
+.Main-content {
+  padding-top: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
 }

@@ -26,12 +26,17 @@ ReactDOM.render(
                     Fork me on GitHub
                 </GitHubForkRibbon>
             </header>
-            <div className="Main-intro">
-                <Switch>
-                    <Route exact path="/" component={Home}/>
-                    <Route path="/about" component={About}/>
-                </Switch>
-            </div>
+
+            <div className="Main-orange-bar" />
+
+            <article>
+                <div className="Main-content">
+                    <Switch>
+                        <Route exact path="/" component={Home}/>
+                        <Route path="/about" component={About}/>
+                    </Switch>
+                </div>
+            </article>
         </div>
     </BrowserRouter>
     ,
