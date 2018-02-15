@@ -8,7 +8,7 @@ or Kubernetes (production). Every component of cndsr is fully scalable.
 cndsr architecture consists of the following components:
 1. **backend** - REST service able to store and retrieve URLs. Also performs validation and generates mapping keys.
 It is entirely written in Django, and is deployed on uWSGI inside separated Docker container. Backend is stateless.
-2. **frontend** - TODO
+2. **frontend** - React app residing behind [serve](https://www.npmjs.com/package/serve). 
 3. **storage** - distributed key:value store used to store mappings. Currently redis is used for this purpose.
 4. **endpoint** - HTTP reverse proxy. Splits the traffic between frontend and backend pods. 
 Every request to _/s/*_ path is redirected to one of backend pods, and every other request is handled by the frontend.
