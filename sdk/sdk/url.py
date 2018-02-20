@@ -14,23 +14,23 @@ class ModelValidationException(Exception):
 
 
 class URL(object):
-    def __init__(self, raw_url):
-        if not raw_url:
+    def __init__(self, address):
+        if not address:
             raise ModelValidationException("empty url")
-        elif '.' not in raw_url:
+        elif '.' not in address:
             raise ModelValidationException("url must contain at least one dot character")
 
-        raw_url = self._force_protocol_prefix(raw_url)
+        address = self._force_protocol_prefix(address)
 
-        parsed_url = urlparse(raw_url)
+        parsed_url = urlparse(address)
         if URL_LOCAL_IP_REGEX.findall(parsed_url.netloc):
             raise ModelValidationException("url represents invalid network location")
 
-        self._url = raw_url
+        self._address = address
 
     @property
     def address(self):
-        return self._url
+        return self._address
 
     def _force_protocol_prefix(self, url):
         url_lower = url.lower()
