@@ -10,13 +10,13 @@ storage = create_storage()
 
 @api_view(['GET'])
 def go_to(request, key, format=None):
-    url = _retrieve_url_by_key(key)
+    url = storage.get(key)
     if not url:
         return JsonResponse(status=404, data={
             'error': 'key not found'
         })
 
-    return HttpResponseRedirect(redirect_to=url)
+    return HttpResponseRedirect(redirect_to=url.address)
 
 
 @api_view(['POST'])
@@ -28,7 +28,7 @@ def shorten(request, format=None):
         })
 
     try:
-        url = URL(raw_url)
+        url = URL.parse(raw_url)
     except ModelValidationException as e:
         return JsonResponse(status=400, data={
             'error': 'invalid URL',
@@ -41,22 +41,10 @@ def shorten(request, format=None):
     })
 
 
-def _retrieve_url_by_key(key):
-    return storage.get(key)
-
-
-def _store_pair(key, url):
-    return storage.set(key, url)
-
-
 def _store_url_and_get_key(url):
     while True:
-        key = _generate_key()
-        if _store_pair(key, url.address):
+        key = generate_random_key()
+        if storage.set(key, url):
             break
 
     return key
-
-
-def _generate_key():
-    return generate_random_key()

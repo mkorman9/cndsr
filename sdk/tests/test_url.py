@@ -9,7 +9,7 @@ class TestUrl(TestCase):
         url = 'https://stackoverflow.com/questions/1789945'
 
         # when
-        processed_url = URL(url)
+        processed_url = URL.parse(url)
 
         # then
         assert url == processed_url.address, '{} != {}'.format(processed_url, url)
@@ -19,7 +19,7 @@ class TestUrl(TestCase):
         url = 'stackoverflow.com/questions/1789945'
 
         # when
-        processed_url = URL(url)
+        processed_url = URL.parse(url)
 
         # then
         expected_url = 'http://{}'.format(url)
@@ -31,7 +31,7 @@ class TestUrl(TestCase):
 
         # when then
         with self.assertRaises(ModelValidationException):
-            URL(url)
+            URL.parse(url)
 
     def test_should_fail_for_local_addresses(self):
         # given
@@ -44,4 +44,4 @@ class TestUrl(TestCase):
         # when then
         for banned_url in banned_urls:
             with self.assertRaises(ModelValidationException):
-                URL(banned_url)
+                URL.parse(banned_url)

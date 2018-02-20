@@ -1,41 +1,41 @@
 from abc import ABCMeta, abstractmethod
 
 import os
+from typing import Optional
 
 import redis
+
+from sdk.url import URL
 
 
 class Storage(metaclass=ABCMeta):
     @abstractmethod
-    def get(self, key):
+    def get(self, key: str) -> Optional['URL']:
         """
         :param key: unique identifier of entry
-        :type key: basestring
         :return: resolved entry value or None if no association was found
         """
         pass
 
     @abstractmethod
-    def set(self, key, value):
+    def set(self, key: str, url: 'URL') -> bool:
         """
         :param key: unique identifier of entry
-        :type key: basestring
-        :param value: value of entry
-        :type value: basestring
+        :param url: value to store
         :return: whether the set was successful
-        :rtype: bool
         """
         pass
 
 
 class RedisStorage(Storage):
-    def get(self, key):
+    def get(self, key: str) -> Optional['URL']:
         connection = self._get_redis_connection()
-        return connection.get(key.lower())
+        entry = connection.get(key.lower())
+        return URL(entry) if entry else None
 
-    def set(self, key, value):
+    def set(self, key: str, url: 'URL') -> bool:
         connection = self._get_redis_connection()
-        return connection.setnx(key.lower(), value) == 1
+        return connection.setnx(key.lower(), url.address) == 1
 
     @staticmethod
     def _get_redis_connection():
