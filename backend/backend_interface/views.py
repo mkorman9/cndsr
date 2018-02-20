@@ -52,7 +52,7 @@ def _store_pair(key, url):
 def _store_url_and_get_key(url):
     while True:
         key = _generate_key()
-        if _store_pair(key, url.url):
+        if _store_pair(key, url.address):
             break
 
     return key

@@ -29,7 +29,7 @@ class URL(object):
         self._url = raw_url
 
     @property
-    def url(self):
+    def address(self):
         return self._url
 
     def _force_protocol_prefix(self, url):
