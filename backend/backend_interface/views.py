@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 
 from sdk.key_generation import generate_random_key
 from sdk.storage import create_storage
-from sdk.url_processor import process_url, InvalidURLException
+from sdk.url import URL, ModelValidationException
 
 storage = create_storage()
 
@@ -21,15 +21,15 @@ def go_to(request, key, format=None):
 
 @api_view(['POST'])
 def shorten(request, format=None):
-    url = request.data.get('url')
-    if not url:
+    raw_url = request.data.get('url')
+    if not raw_url:
         return JsonResponse(status=400, data={
             'error': 'missing url parameter'
         })
 
     try:
-        url = _process_url(url)
-    except InvalidURLException as e:
+        url = URL(raw_url)
+    except ModelValidationException as e:
         return JsonResponse(status=400, data={
             'error': 'invalid URL',
             'details': e.message
@@ -49,14 +49,10 @@ def _store_pair(key, url):
     return storage.set(key, url)
 
 
-def _process_url(url):
-    return process_url(url)
-
-
 def _store_url_and_get_key(url):
     while True:
         key = _generate_key()
-        if _store_pair(key, url):
+        if _store_pair(key, url.url):
             break
 
     return key

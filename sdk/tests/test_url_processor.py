@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from sdk.url_processor import process_url, InvalidURLException
+from sdk.url import URL, ModelValidationException
 
 
 class TestUrlProcess(TestCase):
@@ -9,7 +9,7 @@ class TestUrlProcess(TestCase):
         url = 'https://stackoverflow.com/questions/1789945'
 
         # when
-        processed_url = process_url(url)
+        processed_url = URL(url)
 
         # then
         assert url == processed_url, '{} != {}'.format(processed_url, url)
@@ -19,7 +19,7 @@ class TestUrlProcess(TestCase):
         url = 'stackoverflow.com/questions/1789945'
 
         # when
-        processed_url = process_url(url)
+        processed_url = URL(url)
 
         # then
         expected_url = 'http://{}'.format(url)
@@ -30,8 +30,8 @@ class TestUrlProcess(TestCase):
         url = 'questions'
 
         # when then
-        with self.assertRaises(InvalidURLException):
-            process_url(url)
+        with self.assertRaises(ModelValidationException):
+            URL(url)
 
     def test_should_fail_for_local_addresses(self):
         # given
@@ -43,5 +43,5 @@ class TestUrlProcess(TestCase):
 
         # when then
         for banned_url in banned_urls:
-            with self.assertRaises(InvalidURLException):
-                process_url(banned_url)
+            with self.assertRaises(ModelValidationException):
+                URL(banned_url)
