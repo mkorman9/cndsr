@@ -44,13 +44,13 @@ class URL(Model):
         return URL(address)
 
     @classmethod
-    def _force_protocol_prefix(cls, url):
-        url_lower = url.lower()
+    def _force_protocol_prefix(cls, address: str):
+        url_lower = address.lower()
 
         for prefix in ALLOWED_URL_PREFIXES:
             if url_lower.startswith(prefix):
                 break
         else:
-            url = '{}{}'.format(DEFAULT_URL_PREFIX, url)
+            address = '{}{}'.format(DEFAULT_URL_PREFIX, address)
 
-        return url
+        return address
