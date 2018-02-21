@@ -38,7 +38,7 @@ class RedisStorage(Storage):
         return connection.setnx(key.lower(), url.address) == 1
 
     @staticmethod
-    def _get_redis_connection():
+    def _get_redis_connection() -> 'redis.StrictRedis':
         host, port = os.getenv("REDIS_SERVICE_HOST"), os.getenv("REDIS_SERVICE_PORT")
         if not host or not port:
             raise Exception('REDIS_SERVICE_HOST or REDIS_SERVICE_PORT not set')
@@ -46,5 +46,5 @@ class RedisStorage(Storage):
         return redis.StrictRedis(host=host, port=int(port), db=0)
 
 
-def create_storage():
+def create_storage() -> 'Storage':
     return RedisStorage()

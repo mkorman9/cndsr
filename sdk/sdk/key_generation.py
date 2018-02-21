@@ -1530,5 +1530,5 @@ nouns = [
 ]
 
 
-def generate_random_key():
+def generate_random_key() -> str:
     return "".join([nouns[random.randrange(0, len(nouns))].capitalize() for _ in range(3)])

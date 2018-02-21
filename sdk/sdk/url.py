@@ -1,4 +1,5 @@
 import re
+from abc import abstractmethod, ABCMeta
 from urllib.parse import urlparse
 
 ALLOWED_URL_PREFIXES = ('http://', 'https://')
@@ -8,13 +9,19 @@ URL_LOCAL_IP_REGEX = re.compile(r'''
 ''')
 
 
+class Model(metaclass=ABCMeta):
+    @abstractmethod
+    def parse(self, *args, **kwargs) -> 'Model':
+        pass
+
+
 class ModelValidationException(Exception):
-    def __init__(self, message):
+    def __init__(self, message: str):
         self.message = message
 
 
-class URL(object):
-    def __init__(self, address=""):
+class URL(Model):
+    def __init__(self, address: str=""):
         self._address = address
 
     @property
@@ -22,7 +29,7 @@ class URL(object):
         return self._address
 
     @classmethod
-    def parse(cls, raw_address):
+    def parse(cls, raw_address: str) -> 'URL':
         if not raw_address:
             raise ModelValidationException("empty url")
         elif '.' not in raw_address:
