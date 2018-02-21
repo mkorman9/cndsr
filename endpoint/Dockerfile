@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM nginx:stable-alpine
 
 COPY ./endpoint/configure.sh .
 COPY ./endpoint/nginx.conf /etc/nginx/nginx.conf
