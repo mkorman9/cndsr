@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from backend_interface import views
+from backend import views
 from backend.exceptions import handle_not_found
 
 urlpatterns = format_suffix_patterns([

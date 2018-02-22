@@ -14,7 +14,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'rest_framework',
-    'backend_interface.apps.BackendInterfaceConfig'
+    'backend.apps.BackendConfig'
 ]
 
 MIDDLEWARE = [
