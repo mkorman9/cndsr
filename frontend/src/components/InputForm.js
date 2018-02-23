@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, ButtonToolbar, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
+import {Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import '../index.css';
 
 class InputForm extends Component {
@@ -7,9 +7,12 @@ class InputForm extends Component {
         super(props, context);
 
         this.handleShortenClick = this.handleShortenClick.bind(this);
+        this.handleTextboxSelect = this.handleTextboxSelect.bind(this);
 
         this.state = {
-            isLoading: false
+            isLoading: false,
+            validation: null,
+            validationText: ""
         };
     }
 
@@ -18,12 +21,75 @@ class InputForm extends Component {
         const form = e.target;
         const data = new FormData(form);
         const url = data.get("url");
+        const that = this;
 
         if (url == null || url === "") {
+            this.setState({
+                isLoading: false,
+                validation: "error",
+                validationText: "address cannot be empty"
+            });
             return;
         }
 
-        this.setState({ isLoading: true });
+        this.setState({
+            isLoading: true,
+            validation: null,
+            validationText: ""
+        });
+
+        fetch('/s/shorten', {
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(data)
+        })
+        .then(function(resp) {
+            let json = null;
+
+            resp.json().then(function (data) {
+                json = data;
+            })
+            .catch(function(exc) {
+                that.setState({
+                    isLoading: false,
+                    validation: "error",
+                    validationText: "server has returned invalid response"
+                });
+
+                console.log(exc);
+            });
+
+            if (resp.status !== 200) {
+                that.setState({
+                    isLoading: false,
+                    validation: "error",
+                    validationText: json["error"]
+                });
+            } else {
+                that.setState({
+                    isLoading: false,
+                    validation: "success",
+                    validationText: ""
+                });
+            }
+        })
+        .catch(function(exc) {
+            that.setState({
+                isLoading: false,
+                validation: "error",
+                validationText: ""
+            });
+
+            console.log(exc);
+        })
+    }
+
+    handleTextboxSelect() {
+        this.setState({
+            isLoading: this.state.isLoading,
+            validation: null,
+            validationText: ""
+        });
     }
 
     render() {
@@ -33,14 +99,15 @@ class InputForm extends Component {
             <div>
                 <form onSubmit={!isLoading ? this.handleShortenClick : null}>
                     <ControlLabel>Make your URL shorter and easier to remember</ControlLabel>
-                    <FormGroup>
+                    <FormGroup validationState={this.state.validation}>
                         <FormControl
                             name="url"
                             type="text"
                             placeholder="Enter URL"
                             bsSize="large"
+                            onFocus={this.handleTextboxSelect}
                         />
-                        <FormControl.Feedback/>
+                        <HelpBlock>{this.state.validationText}</HelpBlock>
                     </FormGroup>
 
                     <ButtonToolbar>
