@@ -11,7 +11,7 @@ div .Main {
 
 header {
   background-color: #1565C0;
-  height: 50px;
+  height: 80px;
   padding: 20px;
   color: white;
 }
@@ -68,12 +68,18 @@ article {
   padding-top: 0;
   text-align: center;
   font-size: large;
-  width: 80%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
-  background-color: white;
 }
 
 .Main-content {
+  margin-top: 20px;
   padding: 30px 10px;
+  background-color: white;
+}
+
+.btn {
+    float: none !important;
+    margin-top: 10px;
 }
