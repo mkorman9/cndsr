@@ -1,7 +1,7 @@
 ## cndsr (condenser)
 cndsr is a simple URL shortening software. It's free, open source and ready to deploy basically anywhere.
 
-[TODO: add screenshot here :>]
+![screenshot](.images/screenshot.png)
 
 ### Why?
 Project is maintained for educational purposes.
