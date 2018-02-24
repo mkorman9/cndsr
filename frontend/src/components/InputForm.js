@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import {Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup } from 'react-bootstrap';
 import '../index.css';
 
 class InputForm extends Component {
@@ -12,22 +12,22 @@ class InputForm extends Component {
         this.state = {
             isLoading: false,
             validation: null,
-            validationText: ""
+            validationText: "",
+            input: null
         };
     }
 
     handleShortenClick(e) {
         e.preventDefault();
-        const form = e.target;
-        const data = new FormData(form);
-        const url = data.get("url");
         const that = this;
+        const url = this.state.input.value;
 
-        if (url == null || url === "") {
+        if (url === "") {
             this.setState({
                 isLoading: false,
                 validation: "error",
-                validationText: "address cannot be empty"
+                validationText: "address cannot be empty",
+                input: this.state.input
             });
             return;
         }
@@ -35,13 +35,14 @@ class InputForm extends Component {
         this.setState({
             isLoading: true,
             validation: null,
-            validationText: ""
+            validationText: "",
+            input: this.state.input
         });
 
         fetch('/s/shorten', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(data)
+            body: JSON.stringify({'url': that.state.input.value})
         })
         .then(function(resp) {
             let json = null;
@@ -71,6 +72,8 @@ class InputForm extends Component {
                     validation: "success",
                     validationText: ""
                 });
+
+                that.state.input.value = window.location.href + json['key'];
             }
         })
         .catch(function(exc) {
@@ -88,7 +91,8 @@ class InputForm extends Component {
         this.setState({
             isLoading: this.state.isLoading,
             validation: null,
-            validationText: ""
+            validationText: "",
+            input: this.state.input
         });
     }
 
@@ -105,6 +109,7 @@ class InputForm extends Component {
                             type="text"
                             placeholder="Enter URL"
                             bsSize="large"
+                            inputRef={input => this.state.input = input}
                             onFocus={this.handleTextboxSelect}
                         />
                         <HelpBlock>{this.state.validationText}</HelpBlock>
