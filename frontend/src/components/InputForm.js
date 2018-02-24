@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup } from 'react-bootstrap';
+import {Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import '../index.css';
 
 class InputForm extends Component {
@@ -20,7 +20,8 @@ class InputForm extends Component {
     handleShortenClick(e) {
         e.preventDefault();
         const that = this;
-        const url = this.state.input.value;
+        const input = this.state.input;
+        const url = input.value;
 
         if (url === "") {
             this.setState({
@@ -40,15 +41,27 @@ class InputForm extends Component {
         });
 
         fetch('/s/shorten', {
-            method: 'post',
+            method: 'get',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({'url': that.state.input.value})
         })
         .then(function(resp) {
-            let json = null;
-
             resp.json().then(function (data) {
-                json = data;
+                if (resp.status !== 200) {
+                    that.setState({
+                        isLoading: false,
+                        validation: "error",
+                        validationText: data["error"]
+                    });
+                } else {
+                    that.setState({
+                        isLoading: false,
+                        validation: "success",
+                        validationText: ""
+                    });
+
+                    input.value = window.location.href + data['key'];
+                }
             })
             .catch(function(exc) {
                 that.setState({
@@ -59,22 +72,6 @@ class InputForm extends Component {
 
                 console.log(exc);
             });
-
-            if (resp.status !== 200) {
-                that.setState({
-                    isLoading: false,
-                    validation: "error",
-                    validationText: json["error"]
-                });
-            } else {
-                that.setState({
-                    isLoading: false,
-                    validation: "success",
-                    validationText: ""
-                });
-
-                that.state.input.value = window.location.href + json['key'];
-            }
         })
         .catch(function(exc) {
             that.setState({
