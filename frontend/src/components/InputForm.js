@@ -60,7 +60,7 @@ class InputForm extends Component {
                         validationText: ""
                     });
 
-                    input.value = window.location.href + data['key'];
+                    input.value = window.location.href + 's/' + data['key'];
                 }
             })
             .catch(function(exc) {
