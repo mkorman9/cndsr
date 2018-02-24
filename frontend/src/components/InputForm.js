@@ -41,7 +41,7 @@ class InputForm extends Component {
         });
 
         fetch('/s/shorten', {
-            method: 'get',
+            method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({'url': that.state.input.value})
         })
