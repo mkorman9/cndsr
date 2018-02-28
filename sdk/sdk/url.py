@@ -15,7 +15,7 @@ class Model(metaclass=ABCMeta):
         pass
 
 
-class ModelValidationException(Exception):
+class ModelValidationError(Exception):
     def __init__(self, message: str):
         self.message = message
 
@@ -31,15 +31,15 @@ class URL(Model):
     @classmethod
     def parse(cls, raw_address: str) -> 'URL':
         if not raw_address:
-            raise ModelValidationException("empty url")
+            raise ModelValidationError("empty url")
         elif '.' not in raw_address:
-            raise ModelValidationException("url must contain at least one dot character")
+            raise ModelValidationError("url must contain at least one dot character")
 
         address = cls._force_protocol_prefix(raw_address)
 
         parsed_url = urlparse(address)
         if URL_LOCAL_IP_REGEX.findall(parsed_url.netloc):
-            raise ModelValidationException("url represents invalid network location")
+            raise ModelValidationError("url represents invalid network location")
 
         return URL(address)
 

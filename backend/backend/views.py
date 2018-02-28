@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 
 from sdk.key_generation import generate_random_key
 from sdk.storage import create_storage
-from sdk.url import URL, ModelValidationException
+from sdk.url import URL, ModelValidationError
 
 storage = create_storage()
 
@@ -29,7 +29,7 @@ def shorten(request, format=None):
 
     try:
         url = URL.parse(raw_url)
-    except ModelValidationException as e:
+    except ModelValidationError as e:
         return JsonResponse(status=400, data={
             'error': 'invalid URL',
             'details': e.message

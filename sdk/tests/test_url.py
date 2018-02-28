@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from sdk.url import URL, ModelValidationException
+from sdk.url import URL, ModelValidationError
 
 
 class TestUrl(TestCase):
@@ -30,7 +30,7 @@ class TestUrl(TestCase):
         url = 'questions'
 
         # when then
-        with self.assertRaises(ModelValidationException):
+        with self.assertRaises(ModelValidationError):
             URL.parse(url)
 
     def test_should_fail_for_local_addresses(self):
@@ -43,5 +43,5 @@ class TestUrl(TestCase):
 
         # when then
         for banned_url in banned_urls:
-            with self.assertRaises(ModelValidationException):
+            with self.assertRaises(ModelValidationError):
                 URL.parse(banned_url)
